@@ -434,10 +434,10 @@ async function show_queues(api) {
 }
 
 async function update_parachain_heads(api) {
-    const parachainIDS = await api.query.registrar.parachains(); // returns an arary of all the parachains connected to the network
+    const parachainIDS = await api.query.paras.parachains(); // returns an arary of all the parachains connected to the network
 
     parachainIDS.forEach(async (id) => {
-        await api.query.parachains.heads(id, (head) => {
+        await api.query.paras.heads(id, (head) => {
             // elem = document.getElementById('event_updates_content');
             // elem.innerText = elem.innerText + "Parachain with ID: " + id + " new head: " + head.toHuman() + "\n";
             console.log("Parachain with ID " + id + " - New Head: " + head.toHuman().substring(0, 20) + "...\n");

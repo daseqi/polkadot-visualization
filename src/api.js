@@ -42,7 +42,7 @@ export default class API {
     getParachainIDs() {
         return new Promise((resolve, reject) => {
             if (this.papi == null) reject('API not loaded. Call loadAPI() before calling another function.');
-            this.papi.query.registrar.parachains().then((r) => {
+            this.papi.query.paras.parachains().then((r) => {
                 this.ids = r;
                 resolve({ ids: r });
             }).catch((e) => { reject(e); })
@@ -56,7 +56,7 @@ export default class API {
             let headRequests = [];
             if (this.ids == null || this.ids.length == 0) { reject('No parachain ids.'); }
             this.ids.forEach(id => {
-                headRequests.push(this.papi.query.parachains.heads(id));
+                headRequests.push(this.papi.query.paras.heads(id));
             });
             Promise.all(headRequests).then((heads) => {
                 let response = {};
