@@ -21,7 +21,7 @@ export default class API {
     loadAPI() {
         return new Promise((resolve, reject) => {
             if (this.papi != null){
-                this.papi = r;
+                // this.papi = r; // I think this is causing "undefined" error
                 this.papi.rpc.system.chain().then((r) => {
                     resolve(`Connected to ${r} at ${uri}`, r, uri);
                 }).catch((e) => { reject(e); });
