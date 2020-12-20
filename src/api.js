@@ -23,7 +23,7 @@ export default class API {
             if (this.papi != null){
                 // this.papi = r; // I think this is causing "undefined" error
                 this.papi.rpc.system.chain().then((r) => {
-                    resolve(`Connected to ${r} at ${uri}`, r, uri);
+                    resolve(`Connection already established. Connected to ${r} at ${uri}`, r, uri);
                 }).catch((e) => { reject(e); });
             }
             else{
@@ -31,7 +31,7 @@ export default class API {
                 ApiPromise.create({ provider }).then((r) => {
                     this.papi = r;
                     this.papi.rpc.system.chain().then((r) => {
-                        resolve(`Connected to ${r} at ${uri}`, r, uri);
+                        resolve(`Created new connection. Connected to ${r} at ${uri}`, r, uri);
                     }).catch((e) => { reject(e); });
                 }).catch((e) => { reject(e); });
             }
