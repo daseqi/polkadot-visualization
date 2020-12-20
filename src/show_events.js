@@ -12,11 +12,7 @@ async function main() {
     update_parachain_heads(api);
     // show_queues(api);
     show_new_blocks(api);
-<<<<<<< Updated upstream
     get_current_head(api)
-=======
-    
->>>>>>> Stashed changes
 }
 
 async function get_current_head(api) {
