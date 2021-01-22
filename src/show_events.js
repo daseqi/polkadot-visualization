@@ -4,15 +4,24 @@ const{ ApiPromise, WsProvider } = require('@polkadot/api');
 
 async function main() {
     // const provider = new WsProvider('wss://rococo-rpc.polkadot.io/');
-    const provider = new WsProvider('wss://rococo-rpc.polkadot.io/');
+    const provider = new WsProvider('wss://rpc.polkadot.io/');
     const api = await ApiPromise.create({ provider });
     const chain = await api.rpc.system.chain();
     console.log(`Connected to ${chain}!`);
 
-    update_parachain_heads(api);
+    const [currentValidators, totalIssuance, currentEra] = await Promise.all([
+        api.query.session.validators(),
+        api.query.balances.totalIssuance(),
+        api.query.staking.currentEra(),
+      ]);
+
+    console.log(currentEra.toHuman());
+
+    return;
+    // update_parachain_heads(api);
     // show_queues(api);
-    show_new_blocks(api);
-    get_current_head(api)
+    // show_new_blocks(api);
+    // get_current_head(api)
 }
 
 async function get_current_head(api) {
