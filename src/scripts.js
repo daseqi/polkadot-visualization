@@ -244,14 +244,13 @@ function showChains(result, url) {
 //         // loop: true
 //     });
 // }
-
 function animatePathFrom(from_id, length){
     elem = document.getElementById('chain_id_' + from_id);   
     elem3 = document.getElementById('chain_under_id_' + from_id);
     elem2 = document.getElementById('path_id_' + from_id);   
-    elem.setAttribute('fill', '#E6007A');
-    elem3.setAttribute('fill', '#E6007A');
-    elem2.setAttribute('stroke', '#E6007A');
+    elem.setAttribute('fill', '#e6007a');
+    elem3.setAttribute('fill', '#e6007a');
+    elem2.setAttribute('stroke', '#e6007a');
     var x = document.getElementById('chain_under_id_' + from_id).getAttribute("x");
     x = 338-x;
     var y = document.getElementById('chain_under_id_' + from_id).getAttribute("y");
@@ -281,10 +280,11 @@ function animatePathTo(to_id, from_id, length){
     elem5 = document.getElementById('chain_under_id_' + to_id);  
     elem2 = document.getElementById('path_id_' + to_id); 
     elem3 = document.getElementById('path_under_id_' + to_id);     
-    elem.setAttribute('fill', '#E6007A');
-    elem2.setAttribute('stroke', '#000000');
-    elem3.setAttribute('stroke', '#E6007A');
-    elem5.setAttribute('fill', '#E6007A');
+	elem5.setAttribute('fill', '#e6007a');
+    elem.setAttribute('fill', '#e6007a');
+    elem2.setAttribute('stroke', '#fffff');
+    elem3.setAttribute('stroke', '#e6007a');
+    
     var x2 = document.getElementById('chain_under_id_' + to_id).getAttribute("x");
     x2 = 338-x2;
     var y2 = document.getElementById('chain_under_id_' + to_id).getAttribute("y");
@@ -316,10 +316,10 @@ function sendMessage() {
     from_id = document.getElementById('from_chain').value;
     to_id = document.getElementById('to_chain').value;
     console.log("Animating sending a message from " + from_id + " to " + to_id);
-    animatePathFrom(from_id, 4000);
-    setTimeout(() => { animatePathTo(to_id, from_id, 4000) }, 2000)
+    animatePathFrom(from_id, 2000);
+    setTimeout(() => { animatePathTo(to_id, from_id, 2000) }, 1200)
     // animatePathTo(to_id, 4000);
-    setTimeout(() => { generateChains() }, 8000); //reset the paths after a message is sent... Not really sure why 4000 is the delay, I feel like it should be 8000 but idk
+    setTimeout(() => { generateChains() }, 4250); //reset the paths after a message is sent... Not really sure why 4000 is the delay, I feel like it should be 8000 but idk
 }
 
 
@@ -374,23 +374,33 @@ function generateChains() {
     for (var i = 0; i < number; i++) {
         thisX = offsetX + centerX + Math.cos(angleBetween * i) * (centerX * .8);
         thisY = centerY + Math.sin(angleBetween * i) * (centerX * .8);
+		text += "<path id='path_under_id_" + chains_array[i] + "'d='M" + (thisX) + " " + (thisY) + " L" + (offsetX + centerX) + " " + centerY + " Z' stroke='none' stroke-width='2' />\n";
+        text += "<path id='path_id_" + chains_array[i] + "'d='M" + (thisX) + " " + (thisY) + " L" + (offsetX + centerX) + " " + centerY + " Z' stroke='none' stroke-width='2' />\n";
+        
         text += "<a href='https://polkadot.js.org/apps/?rpc=wss%3A%2F%2F";
         text += parachain_id_to_url[chains_array[i]];
         text += "#/explorer'>";
-        text += "<rect id='chain_id_" + chains_array[i] + "' x='" + (thisX - 30) + "' y='" + (thisY - 30) + "' rx='10' ry='10' width='60' height='60' stroke='black' stroke-width='0' fill='#e6007b4d' transform='rotate(" + (360/num_chains)*i + ", " + (thisX) + ", " + (thisY) + " )' />\n";
-        text += "<rect id='innerchain_id_" + chains_array[i] + "' x='" + (thisX - 12) + "' y='" + (thisY - 12) + "' rx='5' ry='5' width='24' height='24' fill='#FFFFFF' transform='rotate(" + (360/num_chains)*i + ", " + (thisX) + ", " + (thisY) + " )' />\n";
-        text += "<rect id='chain_under_id_" + chains_array[i] + "' x='" + (thisX-12) + "' y='" + (thisY-12) + "' rx='5' ry='5' width='24' height='24' fill='#FFFFFF' transform='rotate(" + (360/num_chains)*i + ", " + (thisX) + ", " + (thisY) + " )' />\n";
+        //text += "<rect id='chain_id_" + chains_array[i] + "' x='" + (thisX - 30) + "' y='" + (thisY - 30) + "' rx='10' ry='10' width='60' height='60' stroke='black' stroke-width='0' fill='#BBBBBB' transform='rotate(" + (360/num_chains)*i + ", " + (thisX) + ", " + (thisY) + " )' />\n";
+		text += "<rect id='innerchain_id_" + chains_array[i] + "' x='" + (thisX - 12) + "' y='" + (thisY - 12) + "' rx='5' ry='5' width='24' height='24' fill='#ffffff' transform='rotate(" + (360/num_chains)*i + ", " + (thisX) + ", " + (thisY) + " )' />\n";
+        text += "<rect id='chain_under_id_" + chains_array[i] + "' x='" + (thisX-12) + "' y='" + (thisY-12) + "' rx='5' ry='5' width='24' height='24' fill='#ffffff' transform='rotate(" + (360/num_chains)*i + ", " + (thisX) + ", " + (thisY) + " )' />\n";
+
+		
+		text += "<circle id='chain_id_" + chains_array[i] + "'cx='" + (thisX) + "' cy='" + (thisY) + "' r='30' fill='#ffffff' stroke-width='20' stroke='#BBBBBB' />\n";
         text += "</a>\n";
-        text += "<path id='path_under_id_" + chains_array[i] + "'d='M" + thisX + " " + thisY + " L" + (offsetX + centerX) + " " + centerY + " Z' stroke='black' stroke-width='2' />\n";
-        text += "<path id='path_id_" + chains_array[i] + "'d='M" + thisX + " " + thisY + " L" + (offsetX + centerX) + " " + centerY + " Z' stroke='grey' stroke-width='2' />\n";
         text += "<text x='" + (thisX - 50) + "' y='" + (thisY - 60) + "' fill='black'> " + parachain_id_to_name[chains_array[i]] + " (" + chains_array[i] + ")</text>";
         text += "<text id='hash_text_id_" + chains_array[i] + "' x='" + (thisX - 50) + "' y='" + (thisY - 40) + "' fill='black'></text>";
     }
 
     // build the relay chain
     text += "<a href='https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Frococo-rpc.polkadot.io#/explorer'>";
-    text += "<circle cx='" + (centerX + offsetX) + "' cy='" + centerY + "' r='120' fill='none' stroke-width='40' stroke='grey' />";
-    text += "</a>";
+    text += "<circle cx='" + (centerX + offsetX) + "' cy='" + centerY + "' r='120' fill='none' stroke-width='40' stroke='#777777' />";
+    /*
+	var c = document.getElementById("graphic");
+	var ctx = c.getContext("2d");
+	ctx.beginPath();
+	ctx.arc((centerX + offsetX), centerY, 150, 0, 2 * Math.PI);
+	ctx.stroke(); */
+	text += "</a>";
 
     // build the little white boxes in the relay chain
     for (var i = 0; i < number; i++) {
