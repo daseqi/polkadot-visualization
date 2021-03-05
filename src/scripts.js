@@ -249,9 +249,9 @@ function animatePathFrom(from_id, length){
     elem = document.getElementById('chain_id_' + from_id);   
     elem3 = document.getElementById('chain_under_id_' + from_id);
     elem2 = document.getElementById('path_id_' + from_id);   
-    elem.setAttribute('fill', '#00BB00');
-    elem3.setAttribute('fill', '#00BB00');
-    elem2.setAttribute('stroke', '#00BB00');
+    elem.setAttribute('fill', '#E6007A');
+    elem3.setAttribute('fill', '#E6007A');
+    elem2.setAttribute('stroke', '#E6007A');
     var x = document.getElementById('chain_under_id_' + from_id).getAttribute("x");
     x = 338-x;
     var y = document.getElementById('chain_under_id_' + from_id).getAttribute("y");
@@ -281,10 +281,10 @@ function animatePathTo(to_id, from_id, length){
     elem5 = document.getElementById('chain_under_id_' + to_id);  
     elem2 = document.getElementById('path_id_' + to_id); 
     elem3 = document.getElementById('path_under_id_' + to_id);     
-    elem.setAttribute('fill', '#00BB00');
+    elem.setAttribute('fill', '#E6007A');
     elem2.setAttribute('stroke', '#000000');
-    elem3.setAttribute('stroke', '#00BB00');
-    elem5.setAttribute('fill', '#00BB00');
+    elem3.setAttribute('stroke', '#E6007A');
+    elem5.setAttribute('fill', '#E6007A');
     var x2 = document.getElementById('chain_under_id_' + to_id).getAttribute("x");
     x2 = 338-x2;
     var y2 = document.getElementById('chain_under_id_' + to_id).getAttribute("y");
