@@ -335,25 +335,41 @@ function changeColor(chain) {
 
 
 // Hard coded URLs for each of the parachains.. Not really a better way to do this because the URLs aren't named with any real consistency
-parachain_id_to_url = {    100: 'tick-rpc.polkadot.io',
+parachain_id_to_url = {     18: 'parachain-rpc.darwinia.network',
+                            21: 'rococo.polkabtc.io/api/parachain',
+                            30: 'rococov1.phala.network/ws',
+                            100: 'tick-rpc.polkadot.io',
                             110: 'trick-rpc.polkadot.io',
                             120: 'track-rpc.polkadot.io',
+                            666: 'rococo-1.acala.laminar.one/ws',
                             1000: 'rpc.parachain.plasmnet',
                             3000: 'parachain-rpc.robonomics.network',
                             5000: 'rococo-1.acala.laminar.one',
+                            7777: 'api-rococo.crust.network',
                             5001: 'rococo-1.laminar-chain.laminar.one',
-                            8000: 'parachain-rpc.darwinia.network'
+                            8000: 'parachain-rpc.darwinia.network',
+                            12623: 'para.rococo-v1.kilt.io',
+                            82406: 'hydrate-rpc.hydradx.io:9944'
                         }
 
 // There might be a way to get these from the Network, but it would require the URLs above anyway, so we might as well just hardcode these too
-parachain_id_to_name = {    100: 'Tick',
+parachain_id_to_name = {    
+
+
+                            18: 'Darwinia PC2',
+                            21: 'PolkaBTC PC1',
+                            30: 'Phala PC1',
+                            100: 'Tick',
                             110: 'Trick',
                             120: 'Track',
                             1000: 'Plasm',
                             3000: 'Robonomics',
                             5000: 'Mandala',
+                            7777: 'Crust PC1',
                             5001: 'Turbulence',
-                            8000: 'Darwinia'
+                            8000: 'Darwinia',
+                            12623: 'Kilt PC1',
+                            82406: 'Hydrate'
                         }
 
 
