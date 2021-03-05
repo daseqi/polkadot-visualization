@@ -59,6 +59,7 @@ function initServer() {
                     elem = document.getElementById('event_updates_content');
                     oldText = elem.innerText;
                     elem.innerText = data.response + "\n\n" + oldText;
+                    initProposedParachains() 
                     initImage();
                     initSidebar();
 
@@ -71,6 +72,30 @@ function initServer() {
         });
 
 }
+
+// added
+// to-do: clean up JSON data
+function initProposedParachains() {
+    fetch('./getProposedParachains').then(
+        function (response) {
+            // console.log(response);
+            if (response.status !== 200) {
+                console.log('Looks like there was a problem. Status Code: ' +
+                    response.status);
+                return;
+            }
+            console.log(response);
+            response.json().then(function (data) {
+                console.log(data);
+            }).catch((e) => {
+                console.log(e);
+            });
+
+        }).catch((e) => {
+            console.log(e);
+        });
+}
+
 
 function initImage() {
     fetch('./getParachainIDs').then(
@@ -362,6 +387,7 @@ parachain_id_to_name = {
                             100: 'Tick',
                             110: 'Trick',
                             120: 'Track',
+                            666: 'Mandala PC2',
                             1000: 'Plasm',
                             3000: 'Robonomics',
                             5000: 'Mandala',

@@ -163,4 +163,16 @@ export default class API {
     getParachainHeads() {
         return {parachainHeads: this.parachainHeads}
     }
+
+    // added: hard-coded the return of a proposed Rococo parachain with ID 1
+    // to-do: need to find way to return all proposed parachains...
+    getProposedParachains() {
+        return new Promise((resolve, reject) => {
+            if (this.papi == null) reject('API not loaded. Call loadAPI() before calling another function.');
+            let chains = []
+            this.papi.query.proposeParachain.proposals(1).then((r) => { // returns parachain with ID #1
+                resolve(r);
+            }).catch((e) => { reject(e); })
+        });
+    } 
 }

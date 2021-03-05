@@ -77,6 +77,15 @@ app.get('/latestParachainHeads', (req, res) => {
     return res.send({ response: polkadotApi.getParachainHeads() });
 });
 
+// added
+app.get('/getProposedParachains', (req, res) => {
+    polkadotApi.getProposedParachains().then((response) => {
+        return res.send({ response: response });
+    }).catch((e) => {
+        return res.send(e);
+    });
+});
+
 app.listen(process.env.PORT, () => {
     console.log(`Polkadot API Server listening on port ${process.env.PORT}!`);
 });
