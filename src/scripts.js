@@ -59,7 +59,7 @@ function initServer() {
                     elem = document.getElementById('event_updates_content');
                     oldText = elem.innerText;
                     elem.innerText = data.response + "\n\n" + oldText;
-                    initProposedParachains() 
+                    initProposedParachains(); 
                     initImage();
                     initSidebar();
 
@@ -94,29 +94,11 @@ function initProposedParachains() {
 
         }).catch((e) => {
             console.log(e);
-        });
+        });       
+}
 
-    
-    fetch('./getValidatorGroups').then(
-        function (response) {
-            // console.log(response);
-            if (response.status !== 200) {
-                console.log('Looks like there was a problem. Status Code: ' +
-                    response.status);
-                return;
-            }
-            //console.log(response);
-            response.json().then(function (data) {
-                console.log(data);
-            }).catch((e) => {
-                console.log(e);
-            });
-
-        }).catch((e) => {
-            console.log(e);
-        });
-
-    
+function initImage() {
+    // sets active_validators
     fetch('./getActiveValidators').then(
         function (response) {
             // console.log(response);
@@ -127,7 +109,7 @@ function initProposedParachains() {
             }
             //console.log(response);
             response.json().then(function (data) {
-                console.log(data);
+                active_validators = data.response; // array of validators
             }).catch((e) => {
                 console.log(e);
             });
@@ -135,13 +117,28 @@ function initProposedParachains() {
         }).catch((e) => {
             console.log(e);
         });
-        
+
+    // sets validator_groups
+    fetch('./getValidatorGroups').then(
+        function (response) {
+            // console.log(response);
+            if (response.status !== 200) {
+                console.log('Looks like there was a problem. Status Code: ' +
+                    response.status);
+                return;
+            }
+            //console.log(response);
+            response.json().then(function (data) {
+                validator_groups = data.response; // validator_groups[parachain][its validators] (parachains indexed with lowest ID at 0th index)
+            }).catch((e) => {
+                console.log(e);
+            });
+
+        }).catch((e) => {
+            console.log(e);
+        });
 
 
-}
-
-
-function initImage() {
     fetch('./getParachainIDs').then(
         function (response) {
             // console.log(response);
@@ -164,7 +161,8 @@ function initImage() {
 
         }).catch((e) => {
             console.log(e);
-        });
+        });    
+
 }
 
 function initSidebar() {
@@ -391,7 +389,8 @@ function sendMessage() {
     setTimeout(() => { generateChains() }, 4250); //reset the paths after a message is sent... Not really sure why 4000 is the delay, I feel like it should be 8000 but idk
 }
 
-
+active_validators = [];
+validator_groups = [];
 chains_array = [];
 num_chains = 0;
 
