@@ -77,6 +77,8 @@ function initServer() {
 // getProposedParachains(), getValidatorGroups(), getActiveValidators()
 // to-do: clean up JSON data
 function initProposedParachains() {
+	elem = document.getElementById('proposed_svg');
+	text = "";
     fetch('./getProposedParachains').then(
         function (response) {
             // console.log(response);
@@ -94,7 +96,22 @@ function initProposedParachains() {
 
         }).catch((e) => {
             console.log(e);
-        });       
+        });   
+//start making the proposed chains
+	centerX = 100;
+    centerY = 200;
+	text += "<text id='proposed_text" + "' x='" + (centerX-100) + "' y='" + (centerY-150) + "' fill='black'>"+"Proposed Parachains"+"</text>";
+
+	numProposed = 12
+	
+	for (var i = 0; i < numProposed; i++) {
+		thisX = centerX+(i%4)*190;
+		thisY = centerY+(Math.floor(i/5)*150);
+        text += "<circle id='proposed_id_" + i + "'cx='" + (thisX) + "' cy='" + (thisY) + "' r='30' fill='#ffffff' stroke-width='20' stroke='#BBBBBB' />\n";
+		text += "<text id='proposed_text_id_" + i + "' x='" + (thisX - 50) + "' y='" + (thisY - 40) + "' fill='black'>"+"proposed parachain #"+i+"</text>";
+
+	}
+	elem.innerHTML = text;		
 }
 
 function initImage() {
@@ -458,8 +475,19 @@ function generateChains() {
 
     // build the outer parachain boxes and the paths that lead to the middle
     for (var i = 0; i < number; i++) {
+        numVals = i;
+		
         thisX = offsetX + centerX + Math.cos(angleBetween * i) * (centerX * .8);
         thisY = centerY + Math.sin(angleBetween * i) * (centerX * .8);
+		
+		for( var j = 0; j < numVals; j++){
+			
+			valX = thisX + Math.cos(angleBetween * (i-j/2)+ Math.PI)  * (centerX * .2);
+			valY = thisY + Math.sin(angleBetween * (i-j/2)+ Math.PI)  * (centerX * .2);
+			
+			text += "<circle id='val_id_" + chains_array[i]+""+j + "'cx='" + (valX) + "' cy='" + (valY) + "' r='5' fill='#BBBBBB' stroke-width='20' stroke='#BBBBBB' />\n";
+			
+		}
 		text += "<path id='path_under_id_" + chains_array[i] + "'d='M" + (thisX) + " " + (thisY) + " L" + (offsetX + centerX) + " " + centerY + " Z' stroke='none' stroke-width='2' />\n";
         text += "<path id='path_id_" + chains_array[i] + "'d='M" + (thisX) + " " + (thisY) + " L" + (offsetX + centerX) + " " + centerY + " Z' stroke='none' stroke-width='2' />\n";
         
