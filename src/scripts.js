@@ -475,7 +475,7 @@ function generateChains() {
 
     // build the outer parachain boxes and the paths that lead to the middle
     for (var i = 0; i < number; i++) {
-        numVals = numVals = validator_groups[i].length;
+        numVals = validator_groups[i].length;
 		
         thisX = offsetX + centerX + Math.cos(angleBetween * i) * (centerX * .8);
         thisY = centerY + Math.sin(angleBetween * i) * (centerX * .8);
@@ -532,6 +532,10 @@ function updateModal(para_id){
     console.log(hash_array[para_id]['head'])
     document.getElementById("paraModal_title").innerHTML = parachain_id_to_name[chains_array[para_id]] + " - ID: "+chains_array[para_id]
     document.getElementById("paraModal_hash").innerHTML = "Hash: "+hash_array[para_id]['head']
+    document.getElementById("paraModal_body").innerHTML = "Validators: \n"
+    for(let i = 0; i < validator_groups[para_id].length; i++) {
+        document.getElementById("paraModal_body").innerHTML += active_validators[validator_groups[para_id][i]]+'\n' 
+    }
 }
 
 async function main() {
