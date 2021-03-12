@@ -475,7 +475,7 @@ function generateChains() {
 
     // build the outer parachain boxes and the paths that lead to the middle
     for (var i = 0; i < number; i++) {
-        numVals = i;
+        numVals = numVals = validator_groups[i].length;
 		
         thisX = offsetX + centerX + Math.cos(angleBetween * i) * (centerX * .8);
         thisY = centerY + Math.sin(angleBetween * i) * (centerX * .8);
