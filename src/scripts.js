@@ -74,6 +74,7 @@ function initServer() {
 }
 
 // added
+// getProposedParachains(), getValidatorGroups(), getActiveValidators()
 // to-do: clean up JSON data
 function initProposedParachains() {
     fetch('./getProposedParachains').then(
@@ -94,6 +95,49 @@ function initProposedParachains() {
         }).catch((e) => {
             console.log(e);
         });
+
+    
+    fetch('./getValidatorGroups').then(
+        function (response) {
+            // console.log(response);
+            if (response.status !== 200) {
+                console.log('Looks like there was a problem. Status Code: ' +
+                    response.status);
+                return;
+            }
+            //console.log(response);
+            response.json().then(function (data) {
+                console.log(data);
+            }).catch((e) => {
+                console.log(e);
+            });
+
+        }).catch((e) => {
+            console.log(e);
+        });
+
+    
+    fetch('./getActiveValidators').then(
+        function (response) {
+            // console.log(response);
+            if (response.status !== 200) {
+                console.log('Looks like there was a problem. Status Code: ' +
+                    response.status);
+                return;
+            }
+            //console.log(response);
+            response.json().then(function (data) {
+                console.log(data);
+            }).catch((e) => {
+                console.log(e);
+            });
+
+        }).catch((e) => {
+            console.log(e);
+        });
+        
+
+
 }
 
 

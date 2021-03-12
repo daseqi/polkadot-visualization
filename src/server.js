@@ -86,6 +86,25 @@ app.get('/getProposedParachains', (req, res) => {
     });
 });
 
+// added
+app.get('/getActiveValidators', (req, res) => {
+    polkadotApi.getActiveValidators().then((response) => {
+        return res.send({ response: response });
+    }).catch((e) => {
+        return res.send(e);
+    });
+});
+
+// added
+app.get('/getValidatorGroups', (req, res) => {
+    polkadotApi.getValidatorGroups().then((response) => {
+        return res.send({ response: response });
+    }).catch((e) => {
+        return res.send(e);
+    });
+});
+
+
 app.listen(process.env.PORT, () => {
     console.log(`Polkadot API Server listening on port ${process.env.PORT}!`);
 });

@@ -174,5 +174,25 @@ export default class API {
                 resolve(r);
             }).catch((e) => { reject(e); })
         });
-    } 
+    }
+
+    // added
+    getActiveValidators() {
+        return new Promise((resolve, reject) => {
+            if (this.papi == null) reject('API not loaded. Call loadAPI() before calling another function.');
+            this.papi.query.session.validators().then((r) => { //
+                resolve(r);
+            }).catch((e) => { reject(e); })
+        });
+    }
+
+    // added
+    getValidatorGroups() {
+        return new Promise((resolve, reject) => {
+            if (this.papi == null) reject('API not loaded. Call loadAPI() before calling another function.');
+            this.papi.query.scheduler.validatorGroups().then((r) => { // 
+                resolve(r);
+            }).catch((e) => { reject(e); })
+        });
+    }
 }
