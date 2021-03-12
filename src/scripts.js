@@ -463,9 +463,12 @@ function generateChains() {
 		text += "<path id='path_under_id_" + chains_array[i] + "'d='M" + (thisX) + " " + (thisY) + " L" + (offsetX + centerX) + " " + centerY + " Z' stroke='none' stroke-width='2' />\n";
         text += "<path id='path_id_" + chains_array[i] + "'d='M" + (thisX) + " " + (thisY) + " L" + (offsetX + centerX) + " " + centerY + " Z' stroke='none' stroke-width='2' />\n";
         
-        text += "<a href='https://polkadot.js.org/apps/?rpc=wss%3A%2F%2F";
+        text += "<a data-toggle='modal' data-target='#paraModal'>"
+        /*text += "<a href='https://polkadot.js.org/apps/?rpc=wss%3A%2F%2F";
         text += parachain_id_to_url[chains_array[i]];
         text += "#/explorer'>";
+        */
+
         //text += "<rect id='chain_id_" + chains_array[i] + "' x='" + (thisX - 30) + "' y='" + (thisY - 30) + "' rx='10' ry='10' width='60' height='60' stroke='black' stroke-width='0' fill='#BBBBBB' transform='rotate(" + (360/num_chains)*i + ", " + (thisX) + ", " + (thisY) + " )' />\n";
 		text += "<rect id='innerchain_id_" + chains_array[i] + "' x='" + (thisX - 12) + "' y='" + (thisY - 12) + "' rx='5' ry='5' width='24' height='24' fill='#ffffff' transform='rotate(" + (360/num_chains)*i + ", " + (thisX) + ", " + (thisY) + " )' />\n";
         text += "<rect id='chain_under_id_" + chains_array[i] + "' x='" + (thisX-12) + "' y='" + (thisY-12) + "' rx='5' ry='5' width='24' height='24' fill='#ffffff' transform='rotate(" + (360/num_chains)*i + ", " + (thisX) + ", " + (thisY) + " )' />\n";
@@ -480,13 +483,9 @@ function generateChains() {
     // build the relay chain
     text += "<a href='https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Frococo-rpc.polkadot.io#/explorer'>";
     text += "<circle cx='" + (centerX + offsetX) + "' cy='" + centerY + "' r='120' fill='none' stroke-width='40' stroke='#777777' />";
-    /*
-	var c = document.getElementById("graphic");
-	var ctx = c.getContext("2d");
-	ctx.beginPath();
-	ctx.arc((centerX + offsetX), centerY, 150, 0, 2 * Math.PI);
-	ctx.stroke(); */
-	text += "</a>";
+
+	//text += "</a>";
+    text += "</a>";
 
     // build the little white boxes in the relay chain
     for (var i = 0; i < number; i++) {
