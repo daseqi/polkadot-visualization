@@ -392,6 +392,7 @@ function sendMessage() {
 active_validators = [];
 validator_groups = [];
 chains_array = [];
+hash_array = [];
 num_chains = 0;
 
 function changeColor(chain) {
@@ -462,7 +463,7 @@ function generateChains() {
 		text += "<path id='path_under_id_" + chains_array[i] + "'d='M" + (thisX) + " " + (thisY) + " L" + (offsetX + centerX) + " " + centerY + " Z' stroke='none' stroke-width='2' />\n";
         text += "<path id='path_id_" + chains_array[i] + "'d='M" + (thisX) + " " + (thisY) + " L" + (offsetX + centerX) + " " + centerY + " Z' stroke='none' stroke-width='2' />\n";
         
-        text += "<a data-toggle='modal' data-target='#paraModal'>"
+        text += "<a data-toggle='modal' data-target='#paraModal' onClick='updateModal("+i+"); return false;'>"
         /*text += "<a href='https://polkadot.js.org/apps/?rpc=wss%3A%2F%2F";
         text += parachain_id_to_url[chains_array[i]];
         text += "#/explorer'>";
@@ -496,6 +497,14 @@ function generateChains() {
     elem.innerHTML = text;
 }
 
+function updateModal(para_id){
+    console.log(para_id)
+    console.log(chains_array[para_id])
+    console.log(parachain_id_to_name[chains_array[para_id]])
+    console.log(hash_array[para_id]['head'])
+    document.getElementById("paraModal_title").innerHTML = parachain_id_to_name[chains_array[para_id]] + " - ID: "+chains_array[para_id]
+    document.getElementById("paraModal_hash").innerHTML = "Hash: "+hash_array[para_id]['head']
+}
 
 async function main() {
     const provider = new WsProvider('wss://rococo-rpc.polkadot.io/');
