@@ -228,6 +228,10 @@ function updateRelaychain() {
                     newText += "Relay Chain - New block: " + data.response.head.number + "\n";
                     latestNumber = data.response.head.number;
                     elem.innerText = newText + "\n" + oldText;
+                    //visually display new block on the relay chain
+                    relay_circle = document.getElementById('relay_circle');
+                    relay_circle.setAttribute('stroke', '#E6007A');
+                    setTimeout(() => { relay_circle.setAttribute('stroke', '#777777'); }, 200);
                 }
 
 
@@ -272,12 +276,17 @@ function updateParachains() {
                         newText2 = "Hash: " + hash_array[i]['head'].substring(0, 15) + "...";
                         console.log(newText2);
                         elem2.innerHTML = newText2;
+                        //visually display new block on the parachain by changing its color
+                        para_circle = document.getElementById('chain_id_' + chains_array[i]);
+                        para_circle.setAttribute('stroke', '#ffcce7');
                     }
                 }
                 currentHeads = hash_array;
                 if(newText != ""){
                     elem.innerText = newText + "\n" + oldText;
                 }
+                //wait 300ms then reset parachains to their original color
+                setTimeout(() => { for(i=0; i<chains_array.length; i++){document.getElementById('chain_id_' + chains_array[i]).setAttribute('stroke', '#bbbbbb');} }, 300);
 
             }).catch((e) => {
                 console.log(e);
@@ -514,7 +523,7 @@ function generateChains() {
 
     // build the relay chain
     text += "<a href='https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Frococo-rpc.polkadot.io#/explorer'>";
-    text += "<circle cx='" + (centerX + offsetX) + "' cy='" + centerY + "' r='120' fill='none' stroke-width='40' stroke='#777777' />";
+    text += "<circle id='relay_circle' cx='" + (centerX + offsetX) + "' cy='" + centerY + "' r='120' fill='none' stroke-width='40' stroke='#777777' />";
 
 	//text += "</a>";
     text += "</a>";
