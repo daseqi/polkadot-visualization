@@ -98,6 +98,7 @@ function initProposedParachains() {
             console.log(e);
         });   
 //start making the proposed chains
+/*
 	centerX = 100;
     centerY = 200;
 	text += "<text id='proposed_text" + "' x='" + (centerX-100) + "' y='" + (centerY-150) + "' fill='black'>"+"Proposed Parachains"+"</text>";
@@ -112,6 +113,7 @@ function initProposedParachains() {
 
 	}
 	elem.innerHTML = text;		
+*/
 }
 
 function initImage() {
