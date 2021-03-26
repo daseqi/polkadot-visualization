@@ -231,7 +231,7 @@ function updateRelaychain() {
                     //visually display new block on the relay chain
                     relay_circle = document.getElementById('relay_circle');
                     relay_circle.setAttribute('stroke', '#E6007A');
-                    setTimeout(() => { relay_circle.setAttribute('stroke', '#777777'); }, 200);
+                    fadeRelaychain();
                 }
 
 
@@ -242,6 +242,27 @@ function updateRelaychain() {
         }).catch((e) => {
             console.log(e);
         });
+}
+
+function fadeRelaychain() {
+    /*chain = document.getElementById('relay_circle');
+    currColor = chain.getAttribute('stroke');
+    currRed = parseInt(currColor.substr(1,2),16);
+    currGreen = parseInt(currColor.substr(3,2),16);
+    currBlue = parseInt(currColor.substr(5,2),16);
+    console.log('current color: ' + currColor);
+    currRed = Math.round(currRed - ((currRed - 119) * 0.1));
+    currBlue = Math.round(currBlue - ((currBlue - 119) * 0.1));
+    currGreen = Math.round(currGreen - ((currGreen - 119) * 0.1));
+    console.log('new color: #' + currRed.toString(16) + currBlue.toString(16) + currGreen.toString(16));
+    chain.setAttribute('stroke', '#' + currRed.toString(16).padStart(2,'0') + currBlue.toString(16).padStart(2,'0') + currGreen.toString(16).padStart(2,'0'));
+    */
+    anime({
+        targets: '#relay_circle',
+        stroke: '#777777',
+        duration: 3000,
+        easing: 'easeInCubic'
+    });
 }
 
 currentHeads = {}
@@ -278,15 +299,20 @@ function updateParachains() {
                         elem2.innerHTML = newText2;
                         //visually display new block on the parachain by changing its color
                         para_circle = document.getElementById('chain_id_' + chains_array[i]);
-                        para_circle.setAttribute('stroke', '#ffcce7');
+                        para_circle.setAttribute('stroke', '#E6007A');
+                        anime({
+                            targets: '#chain_id_' + chains_array[i],
+                            stroke: '#bbbbbb',
+                            duration: 3000,
+                            easing: 'easeInCubic'
+                        });
                     }
                 }
                 currentHeads = hash_array;
                 if(newText != ""){
                     elem.innerText = newText + "\n" + oldText;
                 }
-                //wait 300ms then reset parachains to their original color
-                setTimeout(() => { for(i=0; i<chains_array.length; i++){document.getElementById('chain_id_' + chains_array[i]).setAttribute('stroke', '#bbbbbb');} }, 300);
+
 
             }).catch((e) => {
                 console.log(e);
