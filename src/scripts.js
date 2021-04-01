@@ -286,7 +286,7 @@ function updateParachains() {
             response.json().then(function (data) {
                 console.log(data);
                 elem = document.getElementById('event_updates_content');
-				
+                animate_webs = new Array(); // ADDED
                 oldText = elem.innerText;
                 newText = "";
                 newText2 = "";
@@ -307,6 +307,8 @@ function updateParachains() {
                         console.log(newText2);
                         elem2.innerHTML = newText2;
                         //visually display new block on the parachain by changing its color
+                        animate_webs.push(chains_array[i]); // ADDED
+                        /*
                         para_circle = document.getElementById('chain_id_' + chains_array[i]);
                         para_circle.setAttribute('stroke', '#E6007A');
                         anime({
@@ -315,13 +317,18 @@ function updateParachains() {
                             duration: 3000,
                             easing: 'easeInCubic'
                         });
+                        */
                     }
                 }
                 currentHeads = hash_array;
                 if(newText != ""){
                     elem.innerText = newText + "\n" + oldText;
                 }
-
+                // ADDED
+                for(j=0; j<animate_webs.length; j++){ 
+                    animatePathFrom(animate_webs[j], 2000);
+                }
+                setTimeout(() => { generateChains() }, 4250);
 
             }).catch((e) => {
                 console.log(e);
@@ -380,7 +387,7 @@ function animatePathFrom(from_id, length){
     elem3.setAttribute('fill', '#e6007a');
     elem2.setAttribute('stroke', '#e6007a');
     var x = document.getElementById('chain_under_id_' + from_id).getAttribute("x");
-    x = 338-x;
+    x = 300-x; // changed from 338 to 300 to better center block
     var y = document.getElementById('chain_under_id_' + from_id).getAttribute("y");
     y = 348-y;
     anime({
@@ -395,7 +402,7 @@ function animatePathFrom(from_id, length){
     anime({
         targets: '#path_id_' + from_id,
         strokeDashoffset: [anime.setDashoffset, 0],
-        easing: 'linear',
+        easing: 'easeInCubic', // changed from linear to easeInCubic...feel free to change back
         duration: length,
         //direction: 'alternate',
         // loop: true
