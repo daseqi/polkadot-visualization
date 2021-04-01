@@ -52,7 +52,17 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div class="col-12 col-md-8 offset-xl-1 col-xl-6">
+		<div class="col-12 col-md-1 offset-xl-1 col-xl-2">
+          <div id="info panel" class="text-dark overflow-auto">
+            <div id="info_panel" class="text-center">
+              <h4>Info Panel</h4>
+            </div>
+            <div id="info_panel_content">
+
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-1 offset-xl-1 col-xl-4">
             <label for="from_chain">From:</label>
             <input type="number" id="from_chain" name="from_chain">
             <label for="to_chain">To:</label>
@@ -65,15 +75,10 @@
                     </svg>
                 </div>
             </div>
-          <div id="proposedList">
-                <div id="graphic" style="text-align: center;">
-                    <svg id="proposed_svg" viewBox="0 0 760 700" preserveAspectRatio="xMidYMin">
-                        <!-- This is where the proposed parachains are drawn -->
-                    </svg>
-                </div>
-            </div>
+          
         </div>
-        <div class="col-12 col-md-4 offset-xl-1 col-xl-4">
+		
+        <div class="col-12 col-md-1 offset-xl-1 col-xl-3">
           <div id="event_updates" class="text-light overflow-auto">
             <div id="event_updates_header" class="text-center">
               <h4>Event Updates</h4>
@@ -84,8 +89,16 @@
             </div>
           </div>
         </div>
+		
       </div>
     </div>
+	<div id="proposedList">
+                <div id="graphic" style="text-align: center;">
+                    <svg id="proposed_svg" viewBox="0 0 760 700" preserveAspectRatio="xMidYMin">
+                        <!-- This is where the proposed parachains are drawn -->
+                    </svg>
+                </div>
+            </div>
 
     
   </body>
