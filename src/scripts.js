@@ -62,6 +62,7 @@ function initServer() {
                     initProposedParachains(); 
                     initImage();
                     initSidebar();
+					generateInfoPanel();
 
                 }).catch((e) => {
                     console.log(e);
@@ -183,6 +184,11 @@ function initImage() {
         });    
 
 }
+/*
+function initInfoPanel() {
+	elem = document.getElementById('info_panel');
+	
+}*/
 
 function initSidebar() {
     fetch('./subscribeToEvents').then(
@@ -280,6 +286,7 @@ function updateParachains() {
             response.json().then(function (data) {
                 console.log(data);
                 elem = document.getElementById('event_updates_content');
+				
                 oldText = elem.innerText;
                 newText = "";
                 newText2 = "";
@@ -289,13 +296,13 @@ function updateParachains() {
                     elem2 = document.getElementById('hash_text_id_' + chains_array[i]);
 
                     if(currentHeads[i] == null){
-                        newText += parachain_id_to_name[hash_array[i]['id']] + "(" + hash_array[i]['id'] + ") - current head: " + hash_array[i]['head'].substring(0, 15) + "...\n";
+                        newText += parachain_id_to_name[chains_array[i]] + "(" + hash_array[i]['id'] + ") - current head: \n       " + hash_array[i]['head'].substring(0, 25) + "...\n";
                         newText2 = "Hash: " + hash_array[i]['head'].substring(0, 15) + "...";
                         console.log(newText2);
                         elem2.innerHTML = newText2;
                     }
                     else if(currentHeads[i]['head'] != hash_array[i]['head']){
-                        newText += parachain_id_to_name[hash_array[i]['id']] + "(" + hash_array[i]['id'] + ") - new head: " + hash_array[i]['head'].substring(0, 15) + "...\n";
+                        newText += parachain_id_to_name[chains_array[i]] + "(" + hash_array[i]['id'] + ") - new head: \n       " + hash_array[i]['head'].substring(0, 25) + "...\n";
                         newText2 = "Hash: " + hash_array[i]['head'].substring(0, 15) + "...";
                         console.log(newText2);
                         elem2.innerHTML = newText2;
@@ -500,33 +507,64 @@ parachain_id_to_name = {
                             82406: 'Hydrate'
                         }
 
+function generateInfoPanel(){
+	elem = document.getElementById('info_panel_content');
+	var currentdate = new Date(); 
+	var datetime = "As of: " + currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getFullYear() + " @ "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
+	//display info
+	text = "";
+	text += "<text id = t0 x='" + (10) + "' y='" + (30) + "' fill='black'> INFO:  \n</text>";
+	text += "<text id = t1 x='" + (10) + "' y='" + (50) + "' fill='black'> ACTIVE CHAINS: "+num_chains+  "\n</text>";
+	text += "<text id = t2 x='" + (10) + "' y='" + (70) + "' fill='black'> Placeholder A \n</text>";
+	text += "<text id = t3 x='" + (10) + "' y='" + (90) + "' fill='black'> Placeholder B \n</text>";
+	text += "<text id = t4 x='" + (10) + "' y='" + (110) + "' fill='black'> "+datetime+  "\n</text>";
+	text += "<text id = t5 x='" + (10) + "' y='" + (130) + "' fill='black'> What constants do we need?  \n</text>";
+	elem.innerHTML = text;
+}
+
 
 // This generates the image on the webpage of the network
 // It does so by generating the SVG components that make up the complete image
 function generateChains() {
     console.log("Generating parachains.");
     elem = document.getElementById('message_svg');
+	elem.style.fontSize="120%";
+	
+	
+	
     // number = document.getElementById('num_chains').value;
     number = num_chains
     angleBetween = (360 / number) * (Math.PI / 180);
+	sizeDifVal = .2;
+	sizeDif = .8
+	textXOffset = -60;
+	textYOffset = -65;
     centerX = 350;
     centerY = 360;
-    offsetX = 0; // previously used, no longer to center the SVG in a rectangle, change to 0 because the SVG is just a square now
+    offsetX = -40; // previously used, no longer to center the SVG in a rectangle, change to 0 because the SVG is just a square now
     text = "";
+	
+	
+	
 
     // build the outer parachain boxes and the paths that lead to the middle
     for (var i = 0; i < number; i++) {
         numVals = validator_groups[i].length;
 		
-        thisX = offsetX + centerX + Math.cos(angleBetween * i) * (centerX * .8);
-        thisY = centerY + Math.sin(angleBetween * i) * (centerX * .8);
+        thisX = offsetX + centerX + Math.cos(angleBetween * i) * (centerX * sizeDif);
+        thisY = centerY + Math.sin(angleBetween * i) * (centerX * sizeDif);
 		
 		for( var j = 0; j < numVals; j++){
 			
-			valX = thisX + Math.cos(angleBetween * (i-j/2)+ Math.PI)  * (centerX * .2);
-			valY = thisY + Math.sin(angleBetween * (i-j/2)+ Math.PI)  * (centerX * .2);
+			valX = thisX + Math.cos(angleBetween * (i-j/2)+ Math.PI)  * (centerX * sizeDifVal);
+			valY = thisY + Math.sin(angleBetween * (i-j/2)+ Math.PI)  * (centerX * sizeDifVal);
 			
-			text += "<circle id='val_id_" + chains_array[i]+""+j + "'cx='" + (valX) + "' cy='" + (valY) + "' r='5' fill='#BBBBBB' stroke-width='20' stroke='#BBBBBB' />\n";
+			text += "<circle id='val_id_" + chains_array[i]+"-"+j + "'cx='" + (valX) + "' cy='" + (valY) + "' r='5' fill='#BBBBBB' stroke-width='20' stroke='#BBBBBB' />\n";
 			
 		}
 		text += "<path id='path_under_id_" + chains_array[i] + "'d='M" + (thisX) + " " + (thisY) + " L" + (offsetX + centerX) + " " + centerY + " Z' stroke='none' stroke-width='2' />\n";
@@ -545,8 +583,8 @@ function generateChains() {
 		
 		text += "<circle id='chain_id_" + chains_array[i] + "'cx='" + (thisX) + "' cy='" + (thisY) + "' r='30' fill='#ffffff' stroke-width='20' stroke='#BBBBBB' />\n";
         text += "</a>\n";
-        text += "<text x='" + (thisX - 50) + "' y='" + (thisY - 60) + "' fill='black'> " + parachain_id_to_name[chains_array[i]] + " (" + chains_array[i] + ")</text>";
-        text += "<text id='hash_text_id_" + chains_array[i] + "' x='" + (thisX - 50) + "' y='" + (thisY - 40) + "' fill='black'></text>";
+        text += "<text x='" + (thisX + textXOffset) + "' y='" + (thisY + textYOffset) + "' fill='black'> " + parachain_id_to_name[chains_array[i]] + " (" + chains_array[i] + ")</text>";
+        text += "<text id='hash_text_id_" + chains_array[i] + "' x='" + (thisX + textXOffset) + "' y='" + (thisY + textYOffset+20) + "' fill='black'></text>";
     }
 
     // build the relay chain
