@@ -590,10 +590,7 @@ function generateChains() {
         text += "<path id='path_id_" + chains_array[i] + "'d='M" + (thisX) + " " + (thisY) + " L" + (offsetX + centerX) + " " + centerY + " Z' stroke='none' stroke-width='2' />\n";
         
         text += "<a data-toggle='modal' data-target='#paraModal' onClick='updateModal("+i+"); return false;'>"
-        /*text += "<a href='https://polkadot.js.org/apps/?rpc=wss%3A%2F%2F";
-        text += parachain_id_to_url[chains_array[i]];
-        text += "#/explorer'>";
-        */
+        
 
         //text += "<rect id='chain_id_" + chains_array[i] + "' x='" + (thisX - 30) + "' y='" + (thisY - 30) + "' rx='10' ry='10' width='60' height='60' stroke='black' stroke-width='0' fill='#BBBBBB' transform='rotate(" + (360/num_chains)*i + ", " + (thisX) + ", " + (thisY) + " )' />\n";
 		text += "<rect id='innerchain_id_" + chains_array[i] + "' x='" + (thisX - 12) + "' y='" + (thisY - 12) + "' rx='5' ry='5' width='24' height='24' fill='#ffffff' transform='rotate(" + (360/num_chains)*i + ", " + (thisX) + ", " + (thisY) + " )' />\n";
@@ -631,6 +628,11 @@ function updateModal(para_id){
     document.getElementById("paraModal_title").innerHTML = parachain_id_to_name[chains_array[para_id]] + " - ID: "+chains_array[para_id]
     document.getElementById("paraModal_hash").innerHTML = "Hash: "+hash_array[para_id]['head']
     document.getElementById("paraModal_body").innerHTML = "Validators: \n"
+    var text = "";
+    text += "<a style='color:white' target='_blank' href='https://polkadot.js.org/apps/?rpc=wss%3A%2F%2F";
+    text += parachain_id_to_url[chains_array[para_id]];
+    text += "#/explorer'>Explorer</a>";
+    document.getElementById("paraModal_link").innerHTML = text;
     for(let i = 0; i < validator_groups[para_id].length; i++) {
         document.getElementById("paraModal_body").innerHTML += active_validators[validator_groups[para_id][i]]+'\n' 
     }
