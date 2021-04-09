@@ -237,8 +237,6 @@ function updateRelaychain() {
                     latestNumber = data.response.head.number;
                     elem.innerText = newText + "\n" + oldText;
                     //visually display new block on the relay chain
-                    relay_circle = document.getElementById('relay_circle');
-                    relay_circle.setAttribute('stroke', '#E6007A');
                     fadeRelaychain();
                 }
 
@@ -267,9 +265,17 @@ function fadeRelaychain() {
     */
     anime({
         targets: '#relay_circle',
-        stroke: '#777777',
-        duration: 3000,
-        easing: 'easeInCubic'
+        stroke: [
+            {value: '#ff0000', duration: 2000},
+            {value: '#ffa500', duration: 2000},
+            {value: '#ffff00', duration: 2000},
+            {value: '#008000', duration: 2000},
+            {value: '#0000ff', duration: 2000},
+            {value: '#ff0000', duration: 2000},
+            {value: '#4b0082', duration: 2000},
+            {value: '#000000', duration: 2000},
+        ],
+        easing: 'easeInOutSine'
     });
 }
 
@@ -307,28 +313,34 @@ function updateParachains() {
                         console.log(newText2);
                         elem2.innerHTML = newText2;
                         //visually display new block on the parachain by changing its color
-                        animate_webs.push(chains_array[i]); // ADDED
-                        /*
-                        para_circle = document.getElementById('chain_id_' + chains_array[i]);
-                        para_circle.setAttribute('stroke', '#E6007A');
+                        //animate_webs.push(chains_array[i]); // ADDED
                         anime({
                             targets: '#chain_id_' + chains_array[i],
-                            stroke: '#bbbbbb',
-                            duration: 3000,
-                            easing: 'easeInCubic'
+                            stroke: [
+                                {value: '#ff0000', duration: 2000},
+                                {value: '#ffa500', duration: 2000},
+                                {value: '#ffff00', duration: 2000},
+                                {value: '#008000', duration: 2000},
+                                {value: '#0000ff', duration: 2000},
+                                {value: '#ff0000', duration: 2000},
+                                {value: '#4b0082', duration: 2000},
+                                {value: '#000000', duration: 2000},
+                            ],
+                            easing: 'easeInOutCubic'
                         });
-                        */
+                           
                     }
                 }
                 currentHeads = hash_array;
                 if(newText != ""){
                     elem.innerText = newText + "\n" + oldText;
                 }
-                // ADDED
+                /* ADDED
                 for(j=0; j<animate_webs.length; j++){ 
                     animatePathFrom(animate_webs[j], 2000);
                 }
-                setTimeout(() => { generateChains() }, 4250);
+                */
+                //setTimeout(() => { generateChains() }, 4250);
 
             }).catch((e) => {
                 console.log(e);
