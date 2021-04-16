@@ -59,11 +59,10 @@ function initServer() {
                     elem = document.getElementById('event_updates_content');
                     oldText = elem.innerText;
                     elem.innerText = data.response + "\n\n" + oldText;
-                    initProposedParachains(); 
+                    //initProposedParachains();
+                    getConstants(); 
                     initImage();
                     initSidebar();
-					generateInfoPanel();
-
                 }).catch((e) => {
                     console.log(e);
                 });
@@ -72,6 +71,34 @@ function initServer() {
             console.log('Fetch Error :-S', err);
         });
 
+}
+
+
+function getConstants() {
+    fetch('./getConstants').then(
+        function (response) {
+            // console.log(response);
+            if (response.status !== 200) {
+                console.log('Looks like there was a problem. Status Code: ' +
+                    response.status);
+                return;
+            }
+            console.log(response);
+            response.json().then(function (data) {
+                console.log(data.response);
+                totalKSM = data.response.theTotalKSM;
+                bondRate = data.response.bondStake;
+                stakeRate = data.response.stakeRate;
+                currentEra = data.response.currentEra;
+                generateInfoPanel();              
+
+            }).catch((e) => {
+                console.log(e);
+            });
+
+        }).catch((e) => {
+            console.log(e);
+        });  
 }
 
 // added
@@ -474,6 +501,10 @@ validator_groups = [];
 chains_array = [];
 hash_array = [];
 num_chains = 0;
+totalKSM = 0;
+currentEra = 0;
+bondRate = 0;
+stakeRate = 0;
 
 function changeColor(chain) {
     elem = document.getElementById('chain_id_' + chain);
@@ -537,12 +568,12 @@ function generateInfoPanel(){
                 + currentdate.getSeconds();
 	//display info
 	text = "";
-	text += "<text id = t0 x='" + (10) + "' y='" + (30) + "' fill='black'> INFO:  \n</text>";
-	text += "<text id = t1 x='" + (10) + "' y='" + (50) + "' fill='black'> ACTIVE CHAINS: "+num_chains+  "\n</text>";
-	text += "<text id = t2 x='" + (10) + "' y='" + (70) + "' fill='black'> Placeholder A \n</text>";
-	text += "<text id = t3 x='" + (10) + "' y='" + (90) + "' fill='black'> Placeholder B \n</text>";
-	text += "<text id = t4 x='" + (10) + "' y='" + (110) + "' fill='black'> "+datetime+  "\n</text>";
-	text += "<text id = t5 x='" + (10) + "' y='" + (130) + "' fill='black'> What constants do we need?  \n</text>";
+	text += "<text id = t0 x='" + (10) + "' y='" + (30) + "' fill='black'> Current Era: "+currentEra+  "</text>\n";
+	text += "<text id = t1 x='" + (10) + "' y='" + (50) + "' fill='black'> Active Chains: "+num_chains+  "</text>\n";
+	text += "<text id = t2 x='" + (10) + "' y='" + (70) + "' fill='black'> Bonding Stake: "+bondRate+  "</text>\n";
+	text += "<text id = t3 x='" + (10) + "' y='" + (90) + "' fill='black'> Staking Rate: "+stakeRate+  "</text>\n";
+	text += "<text id = t4 x='" + (10) + "' y='" + (110) + "' fill='black'> Total KSM: "+totalKSM+  "</text>\n";
+	text += "<text id = t5 x='" + (10) + "' y='" + (130) + "' fill='black'> What constants do we need?  </text>\n";
 	elem.innerHTML = text;
 }
 

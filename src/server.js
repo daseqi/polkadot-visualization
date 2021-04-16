@@ -104,6 +104,16 @@ app.get('/getValidatorGroups', (req, res) => {
     });
 });
 
+// added
+
+app.get('/getConstants', (req, res) => {
+    polkadotApi.getConstants().then((response) => {
+        return res.send({ response: response });
+    }).catch((e) => {
+        return res.send(e);
+    });
+});
+
 
 app.listen(process.env.PORT, () => {
     console.log(`Polkadot API Server listening on port ${process.env.PORT}!`);
