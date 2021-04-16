@@ -86,10 +86,10 @@ function getConstants() {
             console.log(response);
             response.json().then(function (data) {
                 console.log(data.response);
-                totalKSM = data.response.theTotalKSM;
-                bondRate = data.response.bondStake;
-                stakeRate = data.response.stakeRate;
-                currentEra = data.response.currentEra;
+                totalROC = data.response.theTotalROC;
+                //bondRate = data.response.bondStake;
+                //stakeRate = data.response.stakeRate;
+                //currentEra = data.response.currentEra;
                 generateInfoPanel();              
 
             }).catch((e) => {
@@ -329,13 +329,23 @@ function updateParachains() {
                     elem2 = document.getElementById('hash_text_id_' + chains_array[i]);
 
                     if(currentHeads[i] == null){
-                        newText += parachain_id_to_name[chains_array[i]] + "(" + hash_array[i]['id'] + ") - current head: \n       " + hash_array[i]['head'].substring(0, 25) + "...\n";
+                        if(parachain_id_to_name[chains_array[i]]==undefined) {
+                            newText += 'Unknown' + "(" + hash_array[i]['id'] + ") - current head: \n       " + hash_array[i]['head'].substring(0, 25) + "...\n";
+                        }
+                        else {
+                            newText += parachain_id_to_name[chains_array[i]] + "(" + hash_array[i]['id'] + ") - current head: \n       " + hash_array[i]['head'].substring(0, 25) + "...\n";
+                        }
                         newText2 = "Hash: " + hash_array[i]['head'].substring(0, 15) + "...";
                         console.log(newText2);
                         elem2.innerHTML = newText2;
                     }
                     else if(currentHeads[i]['head'] != hash_array[i]['head']){
-                        newText += parachain_id_to_name[chains_array[i]] + "(" + hash_array[i]['id'] + ") - new head: \n       " + hash_array[i]['head'].substring(0, 25) + "...\n";
+                        if(parachain_id_to_name[chains_array[i]]==undefined) {
+                            newText += 'Unknown' + "(" + hash_array[i]['id'] + ") - new head: \n       " + hash_array[i]['head'].substring(0, 25) + "...\n";
+                        }
+                        else {
+                            newText += parachain_id_to_name[chains_array[i]] + "(" + hash_array[i]['id'] + ") - new head: \n       " + hash_array[i]['head'].substring(0, 25) + "...\n";
+                        }
                         newText2 = "Hash: " + hash_array[i]['head'].substring(0, 15) + "...";
                         console.log(newText2);
                         elem2.innerHTML = newText2;
@@ -501,10 +511,8 @@ validator_groups = [];
 chains_array = [];
 hash_array = [];
 num_chains = 0;
-totalKSM = 0;
-currentEra = 0;
-bondRate = 0;
-stakeRate = 0;
+totalROC = 0;
+validator_count = 0;
 
 function changeColor(chain) {
     elem = document.getElementById('chain_id_' + chain);
@@ -568,12 +576,12 @@ function generateInfoPanel(){
                 + currentdate.getSeconds();
 	//display info
 	text = "";
-	text += "<text id = t0 x='" + (10) + "' y='" + (30) + "' fill='black'> Current Era: "+currentEra+  "</text>\n";
-	text += "<text id = t1 x='" + (10) + "' y='" + (50) + "' fill='black'> Active Chains: "+num_chains+  "</text>\n";
-	text += "<text id = t2 x='" + (10) + "' y='" + (70) + "' fill='black'> Bonding Stake: "+bondRate+  "</text>\n";
-	text += "<text id = t3 x='" + (10) + "' y='" + (90) + "' fill='black'> Staking Rate: "+stakeRate+  "</text>\n";
-	text += "<text id = t4 x='" + (10) + "' y='" + (110) + "' fill='black'> Total KSM: "+totalKSM+  "</text>\n";
-	text += "<text id = t5 x='" + (10) + "' y='" + (130) + "' fill='black'> What constants do we need?  </text>\n";
+	text += "<text id = t0 x='" + (10) + "' y='" + (30) + "' fill='black'> Total ROC: "+totalROC+  " ROC<br></text>";
+	text += "<text id = t1 x='" + (10) + "' y='" + (50) + "' fill='black'> # of Chains:\n "+num_chains+"<br></text>";
+	text += "<text id = t2 x='" + (10) + "' y='" + (70) + "' fill='black'> # of Validators:\n "+validator_count+  "<br></text>";
+	text += "<text id = t3 x='" + (10) + "' y='" + (90) + "' fill='black'> Staking Rate:\n "+0+  "<br></text>";
+	text += "<text id = t4 x='" + (10) + "' y='" + (110) + "' fill='black'> Total ROC:\n "+0+  "<br></text>";
+	text += "<text id = t5 x='" + (10) + "' y='" + (130) + "' fill='black'> What constants do we need?  <br></text>";
 	elem.innerHTML = text;
 }
 
@@ -613,7 +621,7 @@ function generateChains() {
 			
 			valX = thisX + Math.cos(angleBetween * (i-j/2)+ Math.PI)  * (centerX * sizeDifVal);
 			valY = thisY + Math.sin(angleBetween * (i-j/2)+ Math.PI)  * (centerX * sizeDifVal);
-			
+			validator_count+=1;
 			text += "<circle id='val_id_" + chains_array[i]+"-"+j + "'cx='" + (valX) + "' cy='" + (valY) + "' r='5' fill='#BBBBBB' stroke-width='20' stroke='#BBBBBB' />\n";
 			
 		}

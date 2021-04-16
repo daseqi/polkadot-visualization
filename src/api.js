@@ -200,102 +200,18 @@ export default class API {
     
     async getConstants() {   
         
-        /*
-        console.log("I AM HERE");
-        return new Promise((resolve, reject) => {
-            if (this.papi == null) reject('API not loaded. Call loadAPI() before calling another function.');
-            this.papi.query.balances.totalIssuance().then((r) => { //
-                resolve(r);
-            }).catch((e) => { reject(e); })
-        });
-        */
         const DOT_DECIMAL_PLACES = 1000000000000;
-        let lowest = "no one";
-        let highest = "no one";
-        let highestAmount = NaN;
-        let lowestAmount = NaN;
-        let highestCommission = "no one";
-        let lowestCommission = "no one";
-        let highestCommissionAmount = NaN;
-        let lowestCommissionAmount = NaN;
-
-        const provider = new WsProvider('wss://kusama-rpc.polkadot.io/')
+        const provider = new WsProvider('wss://rococo-rpc.polkadot.io/')
         const api = await ApiPromise.create({ provider })
-        const [ currentValidators, totalIssuance, currentEra ] = await Promise.all([
-          api.query.session.validators(),
-          api.query.balances.totalIssuance(),
-          api.query.staking.currentEra(),
+        const [totalIssuance, ] = await Promise.all([
+          api.query.balances.totalIssuance(),       // ADD CONSTANTS HERE
         ]);
-        const totalBondingStake = await api.query.staking.erasTotalStake(currentEra.toString())
-        const totalKSM = parseInt(totalIssuance.toString())
-        const theTotalKSM = totalKSM/DOT_DECIMAL_PLACES
-        const bondStake = totalBondingStake.toString() / DOT_DECIMAL_PLACES
-        const stakeRate = totalBondingStake.toString() / totalKSM * 100
+        console.log('here3')
+        const totalROC = parseInt(totalIssuance.toString())
+        const theTotalROC = totalROC/DOT_DECIMAL_PLACES
 
-        return {theTotalKSM, bondStake, stakeRate, currentEra}
-        
-        // i think this loop below is giving us some issues
-        /* 
-        for (let i=0; i<currentValidators.length; i++) {
-            const validatorStake = await api.query.staking.erasStakers(currentEra.toString(), currentValidators[i])
-            const validatorComissionRate = await api.query.staking.erasValidatorPrefs(currentEra.toString(), currentValidators[i])
-            const validatorTotalStake = validatorStake['total'].toString() / DOT_DECIMAL_PLACES
+        return {theTotalROC}
 
-            const currentValidator = currentValidators[i].toString();
-            const stake = parseInt(validatorTotalStake);
-            const commission = parseInt(validatorComissionRate['commission'].toString())
-
-            if (isNaN(highestAmount)) {
-                // If highest_amount is NaN, this must be the
-                // first.  Set this validator to highest and lowest everything.
-                lowest = highest = currentValidator
-                lowestAmount = highestAmount = stake
-                lowestCommission = highestCommission = currentValidator
-                lowestCommissionAmount = highestCommissionAmount = commission
-            } else {
-                // Check total stake
-        
-                if (stake > highestAmount) {
-                highest = currentValidator
-                highestAmount = stake
-              } else if (stake < lowestAmount) {
-                lowest = currentValidator
-                lowestAmount = stake
-                }
-        
-                // Check commissions
-        
-                if (commission > highestCommissionAmount) {
-                highestCommission = currentValidator
-                highestCommissionAmount = commission
-              } else if (commission < lowestCommissionAmount) {
-                lowestCommission = currentValidator
-                lowestCommissionAmount = commission
-                }
-            }
-            //check(currentValidators[i].toString(), parseInt(validatorTotalStake), parseInt(validatorComissionRate['commission'].toString()))
-
-        }
-
-        //console.log()
-        //console.log("\nSummary Data:")
-        //console.log(`Total KSM: ${totalKSM / DOT_DECIMAL_PLACES}`)
-        //console.log(`Bonding Stake: ${totalBondingStake.toString() / DOT_DECIMAL_PLACES} KSM`)
-        //console.log(`Staking Rate: ${totalBondingStake.toString() / totalKSM * 100} %`)
-
-        //console.log(`Highest-staked validator: ${highest} : ${highestAmount} KSM`)
-        //console.log(`Lowest-staked validator: ${lowest} : ${lowestAmount} KSM`)
-        //console.log(`Highest commission validator: ${highestCommission} : ${highestCommissionAmount / 10000000}%`)
-        //console.log(`Lowest commission validator: ${lowestCommission} : ${lowestCommissionAmount / 10000000}%`)
-
-        const newTotalKSM = totalKSM / DOT_DECIMAL_PLACES;
-        const bondingStake = totalBondingStake.toString() / DOT_DECIMAL_PLACES;
-        const stakingRate = totalBondingStake.toString() / totalKSM * 100;
-        const highestStakedValidator = { highest, highestAmount};
-        const lowestStakedValidator = { lowest, lowestAmount};
-        //const highestCommissionValidator = {highestCommission};
-        return {currentValidators, totalIssuance, currentEra, totalBondingStake};
-        */
     }
 
 }
