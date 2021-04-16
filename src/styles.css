@@ -17,6 +17,12 @@ svg {
     width: 100%;
     padding: 10px;
 }
+#infopanel {
+    background-color: #222222;
+    height: 60vh;
+    width: 100%;
+    padding: 10px;
+}
 
 #graphic {
     height: auto;
