@@ -73,6 +73,9 @@ function initServer() {
 
 }
 
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 function getConstants() {
     fetch('./getConstants').then(
@@ -87,6 +90,11 @@ function getConstants() {
             response.json().then(function (data) {
                 console.log(data.response);
                 totalROC = data.response.theTotalROC;
+                maxCodeSize = data.response.maxCodeSize;
+                maxHeadSize = data.response.maxHeadSize;
+                blockLength = data.response.blockLength['max']['normal'];
+                epochDuration = data.response.epochDuration;
+                rococoVersion = data.response.version['implName'];
                 //bondRate = data.response.bondStake;
                 //stakeRate = data.response.stakeRate;
                 //currentEra = data.response.currentEra;
@@ -447,7 +455,7 @@ function animatePathFrom(from_id, length){
     anime({
         targets: '#path_id_' + from_id,
         strokeDashoffset: [anime.setDashoffset, 0],
-        easing: 'easeInCubic', // changed from linear to easeInCubic...feel free to change back
+        easing: 'linear', 
         duration: length,
         //direction: 'alternate',
         // loop: true
@@ -509,6 +517,11 @@ hash_array = [];
 num_chains = 0;
 totalROC = 0;
 validator_count = 0;
+maxCodeSize = '';
+maxHeadSize = '';
+blockLength = '';
+epochDuration = '';
+rococoVersion = '';
 
 function changeColor(chain) {
     elem = document.getElementById('chain_id_' + chain);
@@ -519,7 +532,8 @@ function changeColor(chain) {
 
 
 // Hard coded URLs for each of the parachains.. Not really a better way to do this because the URLs aren't named with any real consistency
-parachain_id_to_url = {     18: 'parachain-rpc.darwinia.network',
+parachain_id_to_url = {     1: 'statemint-rococo-rpc.parity.io',
+                            18: 'parachain-rpc.darwinia.network',
                             21: 'rococo.polkabtc.io/api/parachain',
                             30: 'rococov1.phala.network/ws',
                             100: 'tick-rpc.polkadot.io',
@@ -541,7 +555,7 @@ parachain_id_to_url = {     18: 'parachain-rpc.darwinia.network',
 // There might be a way to get these from the Network, but it would require the URLs above anyway, so we might as well just hardcode these too
 parachain_id_to_name = {    
 
-
+                            1: 'Statemint',
                             18: 'Darwinia PC2',
                             21: 'PolkaBTC PC1',
                             30: 'Phala PC1',
@@ -573,12 +587,14 @@ function generateInfoPanel(){
 	//display info
 	text = "";
 	text += "<text id = t0 x='" + (10) + "' y='" + (30) + "' fill='black'> Total ROC: "+totalROC+  " ROC<br></text>";
-	text += "<text id = t1 x='" + (10) + "' y='" + (50) + "' fill='black'> # of Chains:\n "+num_chains+"<br></text>";
-	text += "<text id = t2 x='" + (10) + "' y='" + (70) + "' fill='black'> # of Validators:\n "+validator_count+  "<br></text>";
-	text += "<text id = t3 x='" + (10) + "' y='" + (90) + "' fill='black'> Staking Rate:\n "+0+  "<br></text>";
-	text += "<text id = t4 x='" + (10) + "' y='" + (110) + "' fill='black'> Total ROC:\n "+0+  "<br></text>";
-	text += "<text id = t5 x='" + (10) + "' y='" + (130) + "' fill='black'> What constants do we need?  <br></text>";
-	elem.innerHTML = text;
+	text += "<text id = t1 x='" + (10) + "' y='" + (50) + "' fill='black'> Active Chains:\n "+num_chains+"<br></text>";
+	text += "<text id = t2 x='" + (10) + "' y='" + (70) + "' fill='black'> Active Validators:\n "+validator_count+  "<br></text>";
+	text += "<text id = t3 x='" + (10) + "' y='" + (90) + "' fill='black'> Max Code Size:\n "+numberWithCommas(parseInt(maxCodeSize))+  " u32<br></text>";
+	text += "<text id = t4 x='" + (10) + "' y='" + (110) + "' fill='black'> Max Head Size:\n "+numberWithCommas(parseInt(maxHeadSize))+  " u32<br></text>";
+    text += "<text id = t5 x='" + (10) + "' y='" + (130) + "' fill='black'> Max Block Length:\n "+numberWithCommas(parseInt(blockLength))+  " bytes<br></text>";
+    text += "<text id = t5 x='" + (10) + "' y='" + (150) + "' fill='black'> Epoch Duration:\n "+epochDuration+  " u64<br></text>";
+	text += "<text id = t5 x='" + (10) + "' y='" + (170) + "' fill='black'> Version:\n "+rococoVersion+  " u64<br></text>";
+    elem.innerHTML = text;
 }
 
 

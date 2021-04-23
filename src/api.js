@@ -199,18 +199,20 @@ export default class API {
 
     
     async getConstants() {   
-        
         const DOT_DECIMAL_PLACES = 1000000000000;
         const provider = new WsProvider('wss://rococo-rpc.polkadot.io/')
         const api = await ApiPromise.create({ provider })
-        const [totalIssuance, ] = await Promise.all([
+        const [totalIssuance, maxCodeSize, maxHeadSize, blockLength, epochDuration, version] = await Promise.all([
           api.query.balances.totalIssuance(),       // ADD CONSTANTS HERE
+          api.consts.registrar.maxCodeSize.toString(),
+          api.consts.registrar.maxHeadSize.toString(),
+          api.consts.system.blockLength,
+          api.consts.babe.epochDuration.toString(),
+          api.consts.system.version,
         ]);
-        console.log('here3')
         const totalROC = parseInt(totalIssuance.toString())
         const theTotalROC = totalROC/DOT_DECIMAL_PLACES
-
-        return {theTotalROC}
+        return {theTotalROC, maxCodeSize, maxHeadSize, blockLength, epochDuration, version}
 
     }
 
