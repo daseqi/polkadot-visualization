@@ -293,13 +293,11 @@ function fadeRelaychain() {
     anime({
         targets: '#relay_circle',
         stroke: [
-            {value: '#ff0000', duration: 2000},
-            {value: '#ffa500', duration: 2000},
-            {value: '#ffff00', duration: 2000},
-            {value: '#008000', duration: 2000},
-            {value: '#0000ff', duration: 2000},
-            {value: '#ff0000', duration: 2000},
-            {value: '#4b0082', duration: 2000},
+            {value: '#ec2525', duration: 20},
+            {value: '#ee6115', duration: 2000},
+            {value: '#f6ed0d', duration: 2000},
+            {value: '#5769f6', duration: 2000},
+            {value: '#6812f2', duration: 2000},
             {value: '#000000', duration: 2000},
         ],
         easing: 'easeInOutSine'
@@ -354,13 +352,11 @@ function updateParachains() {
                         anime({
                             targets: '#chain_id_' + chains_array[i],
                             stroke: [
-                                {value: '#ff0000', duration: 2000},
-                                {value: '#ffa500', duration: 2000},
-                                {value: '#ffff00', duration: 2000},
-                                {value: '#008000', duration: 2000},
-                                {value: '#0000ff', duration: 2000},
-                                {value: '#ff0000', duration: 2000},
-                                {value: '#4b0082', duration: 2000},
+                                {value: '#ec2525', duration: 20},
+                                {value: '#ee6115', duration: 2000},
+                                {value: '#f6ed0d', duration: 2000},
+                                {value: '#5769f6', duration: 2000},
+                                {value: '#6812f2', duration: 2000},
                                 {value: '#000000', duration: 2000},
                             ],
                             easing: 'easeInOutCubic'
